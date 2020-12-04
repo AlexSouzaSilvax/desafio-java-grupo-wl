@@ -2,11 +2,11 @@
 <html xmlns="http://www.w3.org/1999/xhtml"
       xmlns:h="http://java.sun.com/jsf/html"
       xmlns:f="http://java.sun.com/jsf/core"
-      xmlns:p="http://primefaces.org/ui" xmlns:ui="http://xmlns.jcp.org/jsf/facelets">
+      xmlns:p="http://primefaces.org/ui" >
 
     <h:head>
         <meta content='text/html; charset=UTF-8' http-equiv="Content-Type"/>
-        <title>helper</title>
+        <title>Alex</title>
     </h:head>
 
     <h:body>
@@ -15,80 +15,110 @@
 
         <div style="font-family: Arial;">
 
-            <ui:composition template="Template.xhtml">
+            <h:form id="frmLista" style="align-items: center; text-align: center; justify-content: center; width: 100%;">            
 
-                <ui:define name="content">
+                <h1 style="color:grey; text-align: center;">Cadastro de Usuários</h1>
 
-                    <div style="
-                         margin:50px; 
-                         margin-top: 0;
-                         padding-top: 0;
-                         border-radius: 7px;
-                         border: 0;                           
-                         background-color: #FFFFFF70;
-                         ">
+                <p:panelGrid columns="4" layout="grid" styleClass="ui-panelgrid-blank" columnClasses="ui-grid-col-5,ui-grid-col-5,ui-grid-col-0,ui-grid-col-2" rendered="#{usuarioController.tela == 0}">
+                    <p:panelGrid/>
+                    <p:panelGrid/>
+                    <!--p:commandButton value="Listar" actionListener="#{usuarioController.lista()}" update="listaPesquisa" /-->
+                    <p:commandButton value="Novo" actionListener="#{usuarioController.novo()}" update="frmDetalhe frmLista" />                    
+                </p:panelGrid>                    
 
-                        <h:form id="frmLista" style="align-items: center; text-align: center; justify-content: center; width: 100%;">            
 
-                            <h1 style="color:grey; text-align: center;">Cadastro de Usuários</h1>
+                <div class="Container100 Responsive100" style="align-items: center; text-align: center;">
+                    <p:dataTable id="listaPesquisa" style="margin: 30px;" rendered="#{usuarioController.tela == 0}" value="#{usuarioController.listaUsuario}" var="u" reflow="true" emptyMessage="Lista vazia" paginator="true" rows="30" rowsPerPageTemplate="30,60,120" >
 
-                            <p:panelGrid columns="2" layout="grid" styleClass="ui-panelgrid-blank" columnClasses="ui-grid-col-0,ui-grid-col-0" rendered="#{situacaoIgrController.tela == 0}"   >                           
-                                <p:inputText value="#{situacaoIgrController.pesquisa}" style="width: 350px;" />
-                                <p:commandButton value="Buscar" actionListener="#{situacaoIgrController.lista()}" update="listaPesquisa" />
-                            </p:panelGrid>
+                        <p:column headerText="ID" sortBy="#{u.id}" width="5">
+                            <p:commandLink style="color:black; font-family: Arial; font-size: 18px; text-decoration:none"  value="#{u.id}" title="#{u.id}" 
+                                           actionListener="#{usuarioController.seleciona(u)}"  update=":frmDetalhe :frmLista"/>
+                        </p:column>
 
-                            <div class="Container100 Responsive100" style="align-items: center; text-align: center;">
-                                <p:dataTable id="listaPesquisa" style="margin: 30px; padding: 30px; top: 0;" rendered="#{situacaoIgrController.tela == 0}" value="#{situacaoIgrController.listaS}" var="p" reflow="true" emptyMessage="Lista vazia" paginator="true" rows="30" rowsPerPageTemplate="30,60,120" >
+                        <p:column headerText="Nome" sortBy="#{u.nome}" width="70">
+                            <p:commandLink style="color:black; font-family: Arial; font-size: 18px; text-decoration:none" value="#{u.nome}" title="#{u.nome}" 
+                                           actionListener="#{usuarioController.seleciona(u)}"  update=":frmDetalhe :frmLista"/>
+                        </p:column>
 
-                                    <p:column headerText="Tipo" sortBy="#{p.tipo}" width="70">
-                                        <!--h:outputText value="#{p.tipo}" title="#{p.tipo}" /-->
-                                        <p:commandLink style="color:black; font-family: Arial; font-size: 18px; text-decoration:none"  value="#{p.tipo}" title="#{p.tipo}" />
-                                    </p:column>
+                        <p:column headerText="Documento" sortBy="#{u.documento}" width="10">
+                            <p:commandLink style="color:black; font-family: Arial; font-size: 18px; text-decoration:none" value="#{u.documento}" 
+                                           title="#{u.documento}" actionListener="#{usuarioController.seleciona(u)}" update=":frmDetalhe :frmLista" />
+                        </p:column>
 
-                                    <p:column headerText="Cód. Igreja" sortBy="#{p.codIgr}" width="40">
-                                        <!--h:outputText value="#{p.codIgr}" title="#{p.codIgr}" /-->
-                                        <p:commandLink style="color:black; font-family: Arial; font-size: 18px; text-decoration:none" value="#{p.codIgr}" title="#{p.codIgr}" />
-                                    </p:column>
+                        <p:column headerText="Data de Nascimento" sortBy="#{u.dataNascimento}" width="10">                            
+                            <h:outputText value="#{u.dataNascimento}" title="#{u.dataNascimento}"  >
+                                <f:convertDateTime type="date" pattern="dd/MM/yyyy" dateStyle="medium" locale="pt" />
+                            </h:outputText>
+                        </p:column>
 
-                                    <p:column headerText="Cód. PJ" sortBy="#{p.codPj}" width="30">
-                                        <!--h:outputText value="#{p.codPj}" title="#{p.codPj}" /-->
-                                        <p:commandLink style="color:black; font-family: Arial; font-size: 18px; text-decoration:none" value="#{p.codPj}" title="#{p.codPj}" />
-                                    </p:column>
+                        <p:column headerText="Senha" sortBy="#{u.senha}" width="50">
+                            <p:commandLink style="color:black; font-family: Arial; font-size: 18px; text-decoration:none" value="#{u.senha}" title="#{u.senha}"
+                                           actionListener="#{usuarioController.seleciona(u)}"  update=":frmDetalhe :frmLista" />
+                        </p:column>
 
-                                    <p:column headerText="Nome" sortBy="#{p.nome}" width="200">
-                                        <!--h:outputText value="#{p.nome}" title="#{p.nome}" /-->
-                                        <p:commandLink style="color:black; font-family: Arial; font-size: 25px; text-decoration:none" value="#{p.nome}" title="#{p.nome}" />
-                                    </p:column>
+                        <p:column headerText="Detalhe" width="5">
+                            <p:commandButton icon="fa fa-fw fa-edit"  actionListener="#{usuarioController.seleciona(u)}" update=":frmDetalhe :frmLista"/>
+                        </p:column>
 
-                                    <p:column headerText="Situação" sortBy="#{p.situacao}" width="100">
-                                        <!--h:outputText value="#{p.situacao}" title="#{p.situacao}" />
-                                        <p:commandLink style="color:black; font-family: Arial; font-size: 18px; text-decoration:none" value="#{p.situacao}" title="#{p.situacao}"  /-->
+                    </p:dataTable>
+                </div>            
+            </h:form>
 
-                                        <p:panelGrid columns="2" layout="grid" styleClass="ui-panelgrid-blank">
+            <h:form id="frmDetalhe">
+                <p:panelGrid rendered="#{usuarioController.tela == 1}"  columns="5"  layout="grid" styleClass="ui-panelgrid-blank" columnClasses="ui-grid-col-10,ui-grid-col-3,ui-grid-col-0,ui-grid-col-0">
 
-                                            <p:panelGrid columns="1" layout="grid" styleClass="ui-panelgrid-blank">
-                                                <p:selectOneMenu id="situacao" value="#{p.situacao}" style="width:125px">                                                   
-                                                    <f:selectItem itemLabel="Ativa" itemValue="A" />
-                                                    <f:selectItem itemLabel="Inativa" itemValue="I" />
-                                                </p:selectOneMenu>  
-                                            </p:panelGrid>
+                    <p:panelGrid>
+                    </p:panelGrid>
+                    <p:panelGrid></p:panelGrid>
 
-                                            <p:panelGrid columns="1" layout="grid" styleClass="ui-panelgrid-blank">
-                                                <p:commandButton value="Salvar" action="#{situacaoIgrController.salvar(p)}" update="frmLista" ajax="false" /> 
-                                            </p:panelGrid>
+                    <p:commandButton value="Voltar" icon="fa fa-fw fa-keyboard-arrow-left" immediate="true" actionListener="#{usuarioController.voltar()}" update=":frmDetalhe :frmLista" />
+                    <p:commandButton value="Salvar" icon="fa fa-fw fa-save" actionListener="#{usuarioController.salvar()}" update=":frmDetalhe :frmLista" />            
 
-                                        </p:panelGrid>
+                    <p:commandButton value="Deletar" icon="fa fa-fw fa-close" styleClass="RedButton" actionListener="#{usuarioController.deletar()}" rendered="${usuarioController.usuario.id != null}"  update=":frmDetalhe :frmLista" >
+                        <p:confirm header="Confirmação" message="Deseja excluir o registro?" icon="ui-icon-alert" />
+                    </p:commandButton>
+                    <p:confirmDialog global="true" showEffect="fade" hideEffect="fade">
+                        <p:commandButton value="Sim" type="button" styleClass="ui-confirmdialog-yes" />
+                        <p:commandButton value="Não" type="button" styleClass="ui-confirmdialog-no" />
+                    </p:confirmDialog>                                                              
 
-                                    </p:column>
+                </p:panelGrid>
 
-                                </p:dataTable>
-                            </div>            
-                        </h:form>
+                <p:separator rendered="#{usuarioController.tela == 1}"/>
 
-                    </div>
+                <p:panelGrid rendered="#{usuarioController.tela == 1}" columns="1" layout="grid" styleClass="ui-panelgrid-blank">                           
 
-                </ui:define>
-            </ui:composition>
+                    <p:panelGrid  columns="3" layout="grid" styleClass="ui-panelgrid-blank" columnClasses="ui-grid-col-3,ui-grid-col-3" >                           
+
+                        <p:panelGrid columns="1" layout="grid" styleClass="ui-panelgrid-blank"  > 
+                            <h:outputText value="Nome:"  />                
+                            <p:inputText value="#{usuarioController.usuario.nome}" required="true" requiredMessage="[NOME] é Obrigatório!"/>                
+                        </p:panelGrid>
+
+                        <p:panelGrid columns="1" layout="grid" styleClass="ui-panelgrid-blank" >
+                            <h:outputText value="Cpf:" />
+                            <!--p:inputText value="#{usuarioController.usuario.documento}" required="true" requiredMessage="[CPF] é Obrigatório!"/-->                                    
+                            <p:inputMask value="#{usuarioController.usuario.documento}" required="true" requiredMessage="[CPF] é Obrigatório!" mask="999.999.999-99"/>
+                        </p:panelGrid> 
+
+                    </p:panelGrid>
+
+                    <p:panelGrid  columns="3" layout="grid" styleClass="ui-panelgrid-blank" columnClasses="ui-grid-col-3,ui-grid-col-3" >  
+
+                        <p:panelGrid columns="1" layout="grid" styleClass="ui-panelgrid-blank">
+                            <h:outputText value="Data Nascimento:" />
+                            <p:calendar locale="pt" pattern="dd/MM/yyyy" required="true" value="#{usuarioController.usuario.dataNascimento}"></p:calendar>
+                        </p:panelGrid> 
+
+                        <p:panelGrid columns="1" layout="grid" styleClass="ui-panelgrid-blank" rendered="${usuarioController.usuario.id != null}" > 
+                            <h:outputText value="Senha:"  />                
+                            <h:outputText value="#{usuarioController.usuario.senha}" />                
+                        </p:panelGrid>
+
+                    </p:panelGrid>
+
+                </p:panelGrid>                            
+            </h:form>
 
         </div>
     </h:body>

@@ -32,24 +32,23 @@ call estudo.pc_insert_usuario('Alex', '15325071785', "2001-03-03",'5480');
 SELECT * FROM usuario;
 
 
+DELIMITER $$
 CREATE PROCEDURE `pc_update_usuario`
 (
 IN IN_id INT(11), 
 INOUT INOUT_nome VARCHAR(100),
 INOUT INOUT_documento VARCHAR(100),
-INOUT INOUT_data_nascimento DATE,
-INOUT INOUT_senha VARCHAR(1000)          
+INOUT INOUT_data_nascimento DATE
 )
 BEGIN
 	UPDATE usuario
     SET
 		nome  =  INOUT_nome,
         documento  =  INOUT_documento,
-        data_nascimento = INOUT_data_nascimento,
-        senha = INOUT_senha
+        data_nascimento = INOUT_data_nascimento
 	WHERE 
 		id    =  IN_id;
-END $$
+END$$
 
 CALL estudo.pc_update_usuario(1,'Alex é foda', '2222222222', "20111005",'100');
 
@@ -69,3 +68,6 @@ END $$
 CALL estudo.pc_delete_usuario(7);
 
 SELECT * FROM usuario;
+
+
+SELECT documento FROM usuario where documento = "153.250.717-85";

@@ -7,10 +7,11 @@ import java.sql.SQLException;
 public class Conexao {
 
     private static Connection conexao;
-    private static final String URL_CONEXAO = "jdbc:mysql://127.0.0.1/estudo?useSSL=false";
+    private static final String URL_CONEXAO = "jdbc:mysql://127.0.0.1/estudo?useTimezone=true&serverTimezone=UTC";
+    //private static final String URL_CONEXAO = "jdbc:mysql://127.0.0.1/estudo?useSSL=false";
     private static final String USUARIO = "root";
-    //private static final String SENHA = ""; //AMAZON
-    private static final String SENHA = "1234"; //LOCAL
+    private static final String SENHA = ""; //AMAZON
+    //private static final String SENHA = "1234"; //LOCAL
 
     public static Connection getConexao() {
         if (conexao == null) {

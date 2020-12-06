@@ -40,9 +40,11 @@ public class UsuarioService {
         lista = lista();
         boolean result = false;
 
-        for (int i = 0; i < lista.size(); i++) {
-            if (lista.get(i).getDocumento().equals(cpf)) {
-                result = true;
+        if (!lista.isEmpty()) {
+            for (int i = 0; i < lista.size(); i++) {
+                if (lista.get(i).getDocumento().equals(cpf)) {
+                    result = true;
+                }
             }
         }
 

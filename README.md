@@ -7,7 +7,7 @@
 <br>
 
 <h4 align="center">
-  http://3.17.4.232/desafio-java-grupo-wl/
+  http://3.17.4.232/desafio-java-grupo-wl/index.jsf
 </h4>
 
 <br>
